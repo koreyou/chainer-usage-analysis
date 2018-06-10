@@ -27,7 +27,21 @@ p = argparse.ArgumentParser()
 parser = argparse.ArgumentParser()
 parser.add_argument('REPO_LIST_PATH', type=str)
 parser.add_argument('OUT_PATH', type=str)
+parser.add_argument('--filter', type=str, default=None,
+                    help="remove all python files but the give argument")
 args = parser.parse_args()
+
+
+if args.filter is not None:
+    # join with spaces because of shell=True
+    cmd_filter = " ".join(
+        ["find", out_path, "-type", "f", "!", "-name", "README*", "-print0", "|",
+         "xargs", "--null", "grep", "-Z", "-L", args.filter, "|",
+         "xargs", "--null", "rm", "-f"])
+else:
+    cmd_filter = " ".join(
+        ["find", out_path, "-type", "f", "!", "-name", "README*",  "!", "-name", "*.py", "-print0", "|",
+         "xargs", "--null", "rm", "-f"])
 
 
 with open(args.REPO_LIST_PATH) as fin:
@@ -55,8 +69,8 @@ with open(args.REPO_LIST_PATH) as fin:
         call(["rm", "-rf", os.path.join(out_path, ".git")])
         # delete everything except python files
         call(["find", out_path, "-type", "f", "!", "-name", "README*", "!", "-name", "*.py", "-delete"])
-        # join with spaces because of shell=True
-        call(" ".join(["find", out_path, "-type", "f", "!", "-name", "README*", "-print0", "|", "xargs", "--null", "grep", "-Z", "-L", "chainer", "|", "xargs", "--null", "rm", "-f"]), shell=True)
+
+        call(cmd_filter, shell=True)
         i += 1
         sleep(2)
 
