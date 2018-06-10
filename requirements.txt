@@ -1,0 +1,6 @@
+sentencepiece==0.0.9
+langdetect==1.0.7
+wordcloud==1.4.1
+numpy==1.13.1
+matplotlib==1.5.3
+requests==2.12.3
