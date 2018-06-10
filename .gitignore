@@ -35,3 +35,8 @@ result
 .python-version
 joblib/
 .ipynb_checkpoints/
+function_names.txt
+function_name_wordcloud.png
+sentence_piece.model
+sentence_piece.vocab
+repos*/
