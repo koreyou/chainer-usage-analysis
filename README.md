@@ -78,4 +78,5 @@ It will produce `repos/`, `repos_pytorch/` and `repos_tensorflow/`, each contain
 ### Run analysis
 
 Open `repository_analysis.ipynb` with jupyter notebook.
+Run all commands for analysis.
 
